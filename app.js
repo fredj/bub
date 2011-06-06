@@ -152,23 +152,25 @@ $(function() {
     }
   });
 
-  var mapbox = new Organization({ id: 'mapbox' });
+  $.getJSON('config.json', function(d) {
+      var org = new Organization({ id: d.organization });
 
-  mapbox.fetch({
-    success: function(model) {
+      org.fetch({
+        success: function(model) {
 
-      var mapbox_repos = new Repositories({
-        organization: model
-      });
+          var org_repos = new Repositories({
+            organization: model
+          });
 
-      mapbox_repos.fetch({
-        success: function(model, data) {
-          (new BubView({ repositories: model })).render();
+          org_repos.fetch({
+            success: function(model, data) {
+              (new BubView({ repositories: model })).render();
+            },
+            error: function() { console.log(arguments); }
+          });
+
         },
-        error: function() { console.log(arguments); }
+        error: function() { }
       });
-
-    },
-    error: function() { }
   });
 });
