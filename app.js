@@ -9,6 +9,9 @@ Backbone.Model.prototype.sync = Backbone.Collection.prototype.sync = function(me
 
 $(function() {
   var Organization = Backbone.Model.extend({
+    initialize: function(options) {
+      this.repositories = options.repositories;
+    },
     url: function() {
       return 'https://github.com/api/v2/json/organizations/' + this.id;
     },
@@ -101,6 +104,43 @@ $(function() {
     }
   });
 
+  var OrgView = Backbone.View.extend({
+    el: $('#repository-all'),
+    initialize: function() {
+      _.bindAll(this, 'render', 'viewStream');
+    },
+    events: {
+      'click a.view-stream': 'viewStream'
+    },
+    template: _.template($('#repository-all-template').html()),
+    render: function() {
+      var v = this;
+      $(this.el).empty();
+      this.el.html(this.template({
+        name: this.model.get('name')
+      }));
+      return this;
+    },
+    viewStream: function() {
+      var all_issues = new Issues({});
+      var all_issues_view = new IssuesView({ collection: all_issues });
+      all_issues_view.render();
+      this.model.repositories.each(function(r) {
+        console.log(r);
+        (new Issues({
+          repository: r
+        })).fetch({
+          success: function(m) {
+            m.each(function(i) {
+              all_issues.add(i);
+            });
+            all_issues_view.render();
+          }
+        });
+      });
+    }
+  });
+
   var RepositoryView = Backbone.View.extend({
     tagName: 'tr',
     className: 'repository-row',
@@ -157,13 +197,14 @@ $(function() {
 
       org.fetch({
         success: function(model) {
-
+          (new OrgView({ model: model })).render();
           var org_repos = new Repositories({
             organization: model
           });
 
           org_repos.fetch({
             success: function(model, data) {
+              org.repositories = model;
               (new BubView({ repositories: model })).render();
             },
             error: function() { console.log(arguments); }

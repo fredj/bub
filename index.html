@@ -35,6 +35,11 @@
         width:200px;
         top:60px;
       }
+      #repository-all {
+        background:#e0e0e0;
+        width:190px;
+        padding:5px;
+      }
       table tr {
         border-top:1px dotted #ccc;
       }
@@ -61,6 +66,8 @@
       <h5>bub</h5>
     </header>
     <div id='bub-app'>
+      <div id='repository-all'>
+      </div>
       <table id='repositories'>
       </table>
       <table id='issues-table'>
@@ -84,6 +91,9 @@
   <td><%= comments %></td>
   <td><%= title %></td>
   <td><a title='view on github.com' href='<%= html_url %>'>↪</a></td>
+</script>
+<script type='text/template' id='repository-all-template' style='display:none;'>
+  <a href='#' class='view-stream'><%= name %></a>
 </script>
   </body>
 </html>
