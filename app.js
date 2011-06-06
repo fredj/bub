@@ -80,6 +80,7 @@ $(function() {
     render: function() {
       $(this.el).html(this.template({
         title: this.model.get('title'),
+        body: ($('<div>' + this.model.get('body') + '</div>').text()).replace(/\"/g, "'"),
         comments: this.model.get('comments'),
         html_url: this.model.get('html_url')
       }));
