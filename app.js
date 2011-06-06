@@ -41,10 +41,13 @@ $(function() {
   var Issues = Backbone.Collection.extend({
     initialize: function(options) {
       this.repository = options.repository;
-      this.sortBy = options.sortBy || 'comments';
+      this.pivot = options.pivot || 'comments';
     },
     model: Issue,
     parse: function(data) {
+      for (var i = 0; i < data.issues.length; i++) {
+        data.issues[i].updated_date = Date.parse(data.issues[i].updated_at);
+      }
       return data.issues;
     },
     url: function() {
@@ -52,7 +55,7 @@ $(function() {
         this.repository.get('owner') + '/' + this.repository.get('name') + '/open';
     },
     comparator: function(m) {
-      return -m.get(m.collection.sortBy) || Infinity;
+      return -m.get(m.collection.pivot) || Infinity;
     }
   });
 
@@ -62,14 +65,14 @@ $(function() {
     },
     initialize: function(options) {
       this.organization = options.organization;
-      this.sortBy = options.sortBy || 'open_issues';
+      this.pivot = options.pivot || 'open_issues';
     },
     model: Repository,
     parse: function(data) {
       return data.repositories;
     },
     comparator: function(m) {
-      return -m.get(m.collection.sortBy) || Infinity;
+      return -m.get(m.collection.pivot) || Infinity;
     }
   });
 
@@ -100,16 +103,28 @@ $(function() {
   var IssuesView = Backbone.View.extend({
     el: $('#issues'),
     initialize: function() {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'resortU', 'resortC');
     },
+    events: {
+      'click .comments-sort': 'resortC',
+      'click .updated-sort': 'resortU'
+    },
+    template: _.template($('#issues-header').html()),
     render: function() {
       var v = this;
-      $(this.el).empty();
+      $(this.el).html(this.template());
       this.collection.each(function(m) {
-        $(v.el).append((new IssueView({model: m})).render().el);
+        v.$('tbody').append((new IssueView({model: m})).render().el);
       });
       return this;
-    }
+    },
+    resort: function(param) {
+      this.collection.pivot = param;
+      this.collection.sort();
+      this.render();
+    },
+    resortC: function() { this.resort('comments'); },
+    resortU: function() { this.resort('updated_date'); }
   });
 
   var OrgView = Backbone.View.extend({

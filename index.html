@@ -8,58 +8,7 @@
     <script src='backbone.js' type='text/javascript'></script>
     <script src='app.js' type='text/javascript'></script>
     <link href='reset.css' rel='stylesheet' />
-    <style type='text/css'>
-      body {
-        font: 13px/20px "Helvetica Neue", "Arial", sans-serif;
-        background: url(noise.png) #eee;
-        color:#222;
-      }
-      header {
-        padding:10px 20px;
-        background-color:#424041;
-        color:#fff;
-      }
-      ul#repositories {
-        list-style-type:none;
-      }
-      a {
-        background-color: #e0e0e0;
-        padding:2px;
-        color:#111;
-        text-decoration:none;
-      }
-      #bub-app {
-        padding:20px;
-      }
-      table#repositories {
-        width:200px;
-        top:60px;
-      }
-      #repository-all {
-        background:#e0e0e0;
-        width:190px;
-        padding:5px;
-      }
-      table tr {
-        border-top:1px dotted #ccc;
-      }
-      table td {
-        padding:5px;
-      }
-      table thead th {
-        text-align:left;
-        padding:5px;
-      }
-      table thead tr {
-        border:none;
-      }
-      table#issues-table {
-        width:550px;
-        position:absolute;
-        left:250px;
-        top:60px;
-      }
-    </style>
+    <link href='site.css' rel='stylesheet' />
   </head>
   <body>
     <header>
@@ -70,16 +19,7 @@
       </div>
       <table id='repositories'>
       </table>
-      <table id='issues-table'>
-        <thead>
-          <tr>
-          <th title='comments'>c</th>
-          <th title='comments'>u</th>
-          <th></th>
-          <th></th>
-        </thead>
-        <tbody id='issues'>
-        </tbody>
+      <table id='issues'>
       </table>
     </div>
 <script type='text/template' id='repository-template' style='display:none;'>
@@ -91,11 +31,21 @@
 <script type='text/template' id='issue-template' style='display:none;'>
   <td><%= comments %></td>
   <td><%= timeAgo(Date.parse(updated_at)) %></td>
-  <td title="<%= body %>"><%= title %></td>
-  <td><a title='view on github.com' href='<%= html_url %>'>↪</a></td>
+  <td><a href='<%= html_url %>' title="<%= body %>"><%= title %></a></td>
 </script>
 <script type='text/template' id='repository-all-template' style='display:none;'>
   <a href='#' class='view-stream'><%= name %></a>
+</script>
+<script type='text/template' id='issues-header'>
+<thead>
+  <tr>
+  <th class='comments-sort' title='comments'>comments</th>
+  <th class='updated-sort' title='updated'>updated</th>
+  <th></th>
+  <th></th>
+</thead>
+<tbody>
+</tbody>
 </script>
   </body>
 </html>
