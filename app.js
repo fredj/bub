@@ -8,7 +8,10 @@ Backbone.Model.prototype.sync = Backbone.Collection.prototype.sync = function(me
 };
 
 // From jed
-var timeAgo = function(a,b,c){for(b=[1e3,60,60,24],a=new Date-a,c=0;a>2*b[c];a/=b[c++]);return~~a+" "+"m0second0minute0hour0day".split(0)[c]+"s ago"};
+var timeAgo = function(a,b,c){
+    for (b=[1e3,60,60,24], a=new Date-a, c=0; a>2*b[c]; a/=b[c++]);
+    return ~~a + '' + 'm0s0m0h0d'.split(0)[c]
+};
 
 $(function() {
   var Organization = Backbone.Model.extend({
@@ -83,8 +86,9 @@ $(function() {
     render: function() {
       $(this.el).html(this.template({
         title: this.model.get('title'),
-        body: ($('<div>' + this.model.get('body') + '</div>').text()).replace(/\"/g, "'"),
+        body: ($('<div>' + this.model.get('body') + '</div>').text()).replace(/\"/g, "'").substring(0, 150),
         comments: this.model.get('comments'),
+        updated_at: this.model.get('updated_at'),
         html_url: this.model.get('html_url')
       }));
       return this;
@@ -130,7 +134,6 @@ $(function() {
       var all_issues_view = new IssuesView({ collection: all_issues });
       all_issues_view.render();
       this.model.repositories.each(function(r) {
-        console.log(r);
         (new Issues({
           repository: r
         })).fetch({

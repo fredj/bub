@@ -74,6 +74,7 @@
         <thead>
           <tr>
           <th title='comments'>c</th>
+          <th title='comments'>u</th>
           <th></th>
           <th></th>
         </thead>
@@ -89,6 +90,7 @@
 </script>
 <script type='text/template' id='issue-template' style='display:none;'>
   <td><%= comments %></td>
+  <td><%= timeAgo(Date.parse(updated_at)) %></td>
   <td title="<%= body %>"><%= title %></td>
   <td><a title='view on github.com' href='<%= html_url %>'>↪</a></td>
 </script>
