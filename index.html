@@ -24,13 +24,13 @@
     </div>
 <script type='text/template' id='repository-template' style='display:none;'>
   <% if (has_issues) { %>
-    <td><span class='open-issues'><%= open_issues %></span></td>
+    <td class='numbers'><span class='open-issues'><%= open_issues %></span></td>
     <td><a class='repository-link' href='#'><%= name %></a></td>
   <% } %>
 </script>
 <script type='text/template' id='issue-template' style='display:none;'>
-  <td><%= comments %></td>
-  <td><%= timeAgo(Date.parse(updated_at)) %></td>
+  <td class='numbers'><%= comments %></td>
+  <td class='numbers'><%= timeAgo(Date.parse(updated_at)) %></td>
   <td><a href='<%= html_url %>' title="<%= body %>"><%= title %></a></td>
 </script>
 <script type='text/template' id='repository-all-template' style='display:none;'>

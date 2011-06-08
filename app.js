@@ -147,15 +147,12 @@ $(function() {
     viewStream: function() {
       var all_issues = new Issues({});
       var all_issues_view = new IssuesView({ collection: all_issues });
-      all_issues_view.render();
       this.model.repositories.each(function(r) {
         (new Issues({
           repository: r
         })).fetch({
           success: function(m) {
-            m.each(function(i) {
-              all_issues.add(i);
-            });
+            all_issues.add(m.models);
             all_issues_view.render();
           }
         });
@@ -207,7 +204,7 @@ $(function() {
     },
     render: function() {
       this.repositories.each(function(m) {
-        this.$('#repositories').append(
+        (!!m.get('has_issues')) && this.$('#repositories').append(
           (new RepositoryView({ model: m })).render().el
         );
       });
@@ -223,6 +220,7 @@ $(function() {
           var org_repos = new Repositories({
             organization: model
           });
+
 
           org_repos.fetch({
             success: function(model, data) {

@@ -4,7 +4,7 @@ body {
   color:#222;
 }
 header {
-  padding:10px 20px;
+  padding:10px 20px 5px 5px;
   background-color:#424041;
   color:#fff;
 }
@@ -12,32 +12,45 @@ ul#repositories {
   list-style-type:none;
 }
 a {
-  background-color: #e0e0e0;
-  padding:2px;
   color:#111;
   text-decoration:none;
 }
+a:hover {
+  color:#000;
+  text-decoration:underline;
+}
 #bub-app {
-  padding:20px;
 }
 table#repositories {
   width:200px;
   top:60px;
+  background-color:#fff;
+  border-right:1px solid #aaa;
 }
 #repository-all {
-  background:#e0e0e0;
-  width:190px;
-  height:15px;
+  width:200px;
 }
-table tr {
+
+#repository-all a {
+  background:#e0e0e0;
+  display:block;
+  padding:10px 5px 5px 5px;
+}
+table#repositories tr {
+  border-top:1px dotted #eee;
+}
+table#issues tr {
   border-top:1px dotted #ccc;
 }
 table td {
   padding:5px;
 }
+table td.numbers {
+  text-align:right;
+}
 table thead th {
   text-align:left;
-  padding:5px;
+  padding:10px 5px 5px 5px;
 }
 table thead tr {
   border:none;
@@ -45,6 +58,6 @@ table thead tr {
 table#issues {
   width:550px;
   position:absolute;
-  left:250px;
-  top:60px;
+  left:200px;
+  top:30px;
 }
