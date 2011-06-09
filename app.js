@@ -1,10 +1,22 @@
 Backbone.Model.prototype.sync = Backbone.Collection.prototype.sync = function(method, model, options) {
-  return $.ajax(_.extend({
-    type: 'GET',
-    dataType: 'jsonp',
-    url: this.url(),
-    processData:  false
-  }, options));
+    var callKey = this.url() + JSON.stringify(options);
+    if (cache = localStorage.getItem(callKey)) {
+        var vals = JSON.parse(cache);
+        return options.success(vals[0], vals[1], vals[2]);
+    }
+
+    var success = options.success;
+    options.success = function(resp, status, xhr) {
+        localStorage.setItem(callKey, JSON.stringify([resp, status, xhr]));
+        success(resp, status, xhr);
+    }
+
+    return $.ajax(_.extend({
+        type: 'GET',
+        dataType: 'jsonp',
+        url: this.url(),
+        processData:  false
+    }, options));
 };
 
 // From jed
