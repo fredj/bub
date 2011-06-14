@@ -35,7 +35,7 @@ $(function() {
     },
     parse: function(data) {
       return data.organization;
-    },
+    }
   });
 
   var Repository = Backbone.Model.extend({
