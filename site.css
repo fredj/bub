@@ -39,6 +39,9 @@ table#repositories {
 table#repositories tr {
   border-top:1px dotted #eee;
 }
+.repository-row.selected {
+  background-color: #eee;
+}
 table#issues tr {
   border-top:1px dotted #ccc;
 }

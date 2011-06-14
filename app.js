@@ -191,6 +191,8 @@ $(function() {
       return this;
     },
     openIssues: function() {
+      $('.repository-row').removeClass('selected');
+      $(this.el).addClass('selected');
       var myIssues = new Issues({
         repository: this.model
       });
