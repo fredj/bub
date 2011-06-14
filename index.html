@@ -32,6 +32,11 @@
   <td class='numbers'><%= comments %></td>
   <td class='numbers'><%= timeAgo(Date.parse(updated_at)) %></td>
   <td><a href='<%= html_url %>' title="<%= body %>"><%= title %></a></td>
+  <td>
+  <% if (pull_request_url) { %>
+    <a href='<%= pull_request_url %>'><img title='pull request' src='pull-request.png'/></a>
+  <% } %>
+  </td>
 </script>
 <script type='text/template' id='repository-all-template' style='display:none;'>
   <a href='#' class='view-stream'><%= name %></a>

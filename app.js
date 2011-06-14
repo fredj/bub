@@ -104,7 +104,8 @@ $(function() {
         body: ($('<div>' + this.model.get('body') + '</div>').text()).replace(/\"/g, "'").substring(0, 150),
         comments: this.model.get('comments'),
         updated_at: this.model.get('updated_at'),
-        html_url: this.model.get('html_url')
+        html_url: this.model.get('html_url'),
+        pull_request_url: this.model.get('pull_request_url')
       }));
       return this;
     },
