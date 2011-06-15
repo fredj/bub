@@ -25,7 +25,7 @@ table#repositories {
   width:200px;
   top:60px;
   background-color:#fff;
-  border-right:1px solid #aaa;
+  box-shadow: 0 0 20px #ccc;
 }
 #repository-all {
   width:200px;
