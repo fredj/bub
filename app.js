@@ -219,9 +219,10 @@ $(function() {
     },
     render: function() {
       this.repositories.each(function(m) {
-        (!!m.get('has_issues')) && this.$('#repositories').append(
-          (new RepositoryView({ model: m })).render().el
-        );
+        if (!!m.get('has_issues') && m.get('open_issues') > 0) {
+          this.$('#repositories').append(
+            (new RepositoryView({ model: m })).render().el);
+        }
       });
     }
   });
