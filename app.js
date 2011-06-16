@@ -99,10 +99,16 @@ $(function() {
     },
     template: _.template($('#issue-template').html()),
     render: function() {
+      var repo = this.model.collection.repository;
+      var url = 'https://github.com/' + repo.get('owner') + '/' + repo.get('name') + '/issues?labels=';
+      var labels = _.map(this.model.get('labels'), function(label) {
+        return "<a href='" + url + label + "'>" + label + "</a>";
+      });
       $(this.el).html(this.template({
         title: this.model.get('title'),
         body: ($('<div>' + this.model.get('body') + '</div>').text()).replace(/\"/g, "'").substring(0, 150),
         comments: this.model.get('comments'),
+        labels: labels.join(' '),
         updated_at: this.model.get('updated_at'),
         html_url: this.model.get('html_url'),
         pull_request_url: this.model.get('pull_request_url')
