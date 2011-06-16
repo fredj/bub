@@ -30,7 +30,9 @@ table#repositories {
 #repository-all {
   width:200px;
 }
-
+.comments-sort, .updated-sort {
+  cursor: pointer;
+}
 #repository-all a {
   background:#e0e0e0;
   display:block;
